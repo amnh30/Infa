@@ -1,0 +1,345 @@
+! **********************************************************************
+!                      Complete Network Configuration
+! **********************************************************************
+! This file contains the complete configurations for the Multilayer (Core) Switch,
+! all Department Access Switches, and the Server-Side Switch. Each section includes
+! commands and comments explaining the purpose of each part.
+
+! **********************************************************************
+! 1. Multilayer (Core) Switch – CoreSwitch Configuration
+! Purpose: This switch performs inter-VLAN routing and connects all department
+! switches and the server switch via trunk links.
+! **********************************************************************
+enable
+configure terminal
+hostname CoreSwitch
+
+! Enable Layer 3 routing on the switch.
+ip routing
+
+! ----- VLAN Configuration -----
+! Create VLANs for all departments and servers.
+vlan 10
+ name HR
+vlan 20
+ name CS
+vlan 30
+ name Marketing
+vlan 40
+ name IT
+vlan 50
+ name Management
+vlan 60
+ name Finance
+vlan 100
+ name DHCP_Server
+vlan 110
+ name Email_Server
+vlan 120
+ name HTTPS_Server
+exit
+
+! ----- SVI (Switch Virtual Interfaces) Configuration -----
+! These interfaces are used for inter-VLAN routing.
+interface Vlan10
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+exit
+
+interface Vlan20
+ ip address 192.168.20.1 255.255.255.0
+ no shutdown
+exit
+
+interface Vlan30
+ ip address 192.168.30.1 255.255.255.0
+ no shutdown
+exit
+
+interface Vlan40
+ ip address 192.168.40.1 255.255.255.0
+ no shutdown
+exit
+
+interface Vlan50
+ ip address 192.168.50.1 255.255.255.0
+ no shutdown
+exit
+
+interface Vlan60
+ ip address 192.168.60.1 255.255.255.0
+ no shutdown
+exit
+
+interface Vlan100
+ ip address 192.168.100.1 255.255.255.0
+ no shutdown
+exit
+
+interface Vlan110
+ ip address 192.168.110.1 255.255.255.0
+ no shutdown
+exit
+
+interface Vlan120
+ ip address 192.168.120.1 255.255.255.0
+ no shutdown
+exit
+
+! ----- Trunk Port Configuration -----
+! Set up trunk interfaces to connect to Access and Server switches.
+interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30,40,50,60,100,110,120
+exit
+
+interface GigabitEthernet0/2
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30,40,50,60,100,110,120
+exit
+
+! ----- (Optional) Default Route -----
+! Uncomment and set next-hop IP if connecting to an external network.
+! ip route 0.0.0.0 0.0.0.0 <next-hop-ip>
+
+write memory
+
+! **********************************************************************
+! 2. HR Department Access Switch – HR_Switch Configuration
+! Purpose: Provides access for HR department devices and connects to the CoreSwitch.
+! **********************************************************************
+enable
+configure terminal
+hostname HR_Switch
+
+! Create the HR VLAN (redundant if centrally managed, but included for completeness).
+vlan 10
+ name HR
+exit
+
+! ----- Access Ports Configuration -----
+! Assign ports for HR devices to VLAN 10.
+interface range FastEthernet0/1-12
+ switchport mode access
+ switchport access vlan 10
+exit
+
+! ----- Uplink Configuration -----
+! Configure the trunk port to connect to the CoreSwitch.
+interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30,40,50,60
+exit
+
+! ----- Enable PortFast -----
+! Speeds up transition on access ports.
+spanning-tree portfast default
+
+write memory
+
+! **********************************************************************
+! 3. CS Department Access Switch – CS_Switch Configuration
+! Purpose: Provides access for CS department devices.
+! **********************************************************************
+enable
+configure terminal
+hostname CS_Switch
+
+vlan 20
+ name CS
+exit
+
+interface range FastEthernet0/1-12
+ switchport mode access
+ switchport access vlan 20
+exit
+
+interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30,40,50,60
+exit
+
+spanning-tree portfast default
+
+write memory
+
+! **********************************************************************
+! 4. Marketing Department Access Switch – Marketing_Switch Configuration
+! Purpose: Provides access for Marketing department devices.
+! **********************************************************************
+enable
+configure terminal
+hostname Marketing_Switch
+
+vlan 30
+ name Marketing
+exit
+
+interface range FastEthernet0/1-12
+ switchport mode access
+ switchport access vlan 30
+exit
+
+interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30,40,50,60
+exit
+
+spanning-tree portfast default
+
+write memory
+
+! **********************************************************************
+! 5. IT Department Access Switch – IT_Switch Configuration
+! Purpose: Provides access for IT department devices.
+! **********************************************************************
+enable
+configure terminal
+hostname IT_Switch
+
+vlan 40
+ name IT
+exit
+
+interface range FastEthernet0/1-12
+ switchport mode access
+ switchport access vlan 40
+exit
+
+interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30,40,50,60
+exit
+
+spanning-tree portfast default
+
+write memory
+
+! **********************************************************************
+! 6. Management Department Access Switch – Management_Switch Configuration
+! Purpose: Provides access for Management department devices.
+! **********************************************************************
+enable
+configure terminal
+hostname Management_Switch
+
+vlan 50
+ name Management
+exit
+
+interface range FastEthernet0/1-12
+ switchport mode access
+ switchport access vlan 50
+exit
+
+interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30,40,50,60
+exit
+
+spanning-tree portfast default
+
+write memory
+
+! **********************************************************************
+! 7. Finance Department Access Switch – Finance_Switch Configuration
+! Purpose: Provides access for Finance department devices.
+! **********************************************************************
+enable
+configure terminal
+hostname Finance_Switch
+
+vlan 60
+ name Finance
+exit
+
+interface range FastEthernet0/1-12
+ switchport mode access
+ switchport access vlan 60
+exit
+
+interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,30,40,50,60
+exit
+
+spanning-tree portfast default
+
+write memory
+
+! **********************************************************************
+! 8. Server-Side Switch – ServerSwitch Configuration
+! Purpose: Connects the servers (DHCP, Email, HTTPS) to the network.
+! **********************************************************************
+enable
+configure terminal
+hostname ServerSwitch
+
+! Create server-specific VLANs.
+vlan 100
+ name DHCP_Server
+vlan 110
+ name Email_Server
+vlan 120
+ name HTTPS_Server
+exit
+
+! ----- Trunk Port Configuration -----
+! Set up trunk to CoreSwitch with both server and departmental VLANs.
+interface GigabitEthernet0/1
+ switchport mode trunk
+ switchport trunk allowed vlan 100,110,120,10,20,30,40,50,60
+exit
+
+! (Optional) Configure SVIs on the ServerSwitch if it performs any routing.
+interface Vlan100
+ ip address 192.168.100.2 255.255.255.0
+ no shutdown
+exit
+
+interface Vlan110
+ ip address 192.168.110.2 255.255.255.0
+ no shutdown
+exit
+
+interface Vlan120
+ ip address 192.168.120.2 255.255.255.0
+ no shutdown
+exit
+
+write memory
+
+! **********************************************************************
+! 9. Additional Security & Management Settings (Common to All Switches)
+! Purpose: Enhance security and manageability.
+! **********************************************************************
+! Secure console access
+line console 0
+ password cisco
+ login
+exit
+
+! Secure VTY (SSH access)
+line vty 0 4
+ password cisco
+ login
+ transport input ssh
+exit
+
+! Encrypt passwords in the configuration
+service password-encryption
+
+write memory
+
+! **********************************************************************
+! 10. Verification Commands
+! Purpose: Verify the current configuration and operational status.
+! **********************************************************************
+show vlan brief
+show ip interface brief
+show interfaces trunk
+show ip route
+show port-security
+show ip dhcp binding
+show running-config
+show startup-config
