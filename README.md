@@ -167,6 +167,34 @@ write memory
     <p>Refer to the configuration documents for more details on the setup and to guide future modifications or troubleshooting.</p>
   </section>
 
+  <section id="license-contact">
+    <h2>License & Contact</h2>
+    <h3>License</h3>
+    <p>This project is licensed under the MIT License. You are free to use, modify, and distribute this project as long as you include the original license and copyright notice.</p>
+    <pre>
+MIT License
+
+Copyright (c) 2025
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+[Full license text available in the LICENSE file]
+    </pre>
+
+    <h3>Contact</h3>
+    <p>For any inquiries or further information about this project, please contact:</p>
+    <ul>
+      <li><strong>Email:</strong> support@networkproject.com</li>
+      <li><strong>Phone:</strong> +1 (555) 123-4567</li>
+      <li><strong>Address:</strong> 123 Network Lane, Tech City, USA</li>
+    </ul>
+  </section>
+
   <footer>
     <p>&copy; 2025 Enterprise Network Configuration Project</p>
   </footer>
