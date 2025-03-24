@@ -1,4 +1,4 @@
-```markdown
+markdown
 # Enterprise Network Configuration with VLAN Segmentation
 
 ![Network Diagram](Capture.JPG)  
