@@ -1,6 +1,6 @@
 # 🌐 Enterprise Network Configuration Project
 
-![Network Topology](View.png)
+![Network Topology](Capture.JPG)
 
 ## 📌 Overview
 This project details a **comprehensive enterprise network setup** using VLAN segmentation and a multilayer core switch to manage inter-VLAN routing. It includes configurations for:
