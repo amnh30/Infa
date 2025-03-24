@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Enterprise Network Configuration Project</title>
-</head>
+
 <body>
   <h1>Enterprise Network Configuration Project</h1>
   
@@ -56,4 +51,3 @@
   
   <p>&copy; 2025 Enterprise Network Configuration Project</p>
 </body>
-</html>
