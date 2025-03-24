@@ -1,202 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Enterprise Network Configuration Project</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 40px;
-      line-height: 1.6;
-      background-color: #f7f7f7;
-      color: #333;
-    }
-    header, footer {
-      text-align: center;
-      padding: 10px;
-      background-color: #004080;
-      color: #fff;
-    }
-    h1, h2, h3 {
-      color: #004080;
-    }
-    section {
-      background: #fff;
-      padding: 20px;
-      margin-bottom: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-    .screenshot {
-      text-align: center;
-      margin: 20px 0;
-    }
-    .screenshot img {
-      max-width: 100%;
-      height: auto;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    pre {
-      background: #e8e8e8;
-      padding: 15px;
-      overflow: auto;
-      border-radius: 4px;
-      font-size: 0.9em;
-    }
-    a {
-      color: #004080;
-      text-decoration: none;
-    }
-  </style>
-</head>
-<body>
-  <header>
-    <h1>Enterprise Network Configuration Project</h1>
-  </header>
+```markdown
+# Enterprise Network Configuration with VLAN Segmentation
 
-  <section id="overview">
-    <h2>Overview</h2>
-    <p>This project sets up a segmented enterprise network. The configuration uses a multilayer (core) switch for inter-VLAN routing and multiple departmental access switches to ensure traffic isolation and efficient management. A dedicated server-side switch hosts key server resources. The configuration files include VLAN creation, interface settings, and security banners for each device.</p>
-  </section>
+![Network Diagram](Capture.JPG)  
+*Note: AI-generated diagram for illustrative purposes. Actual network topology may vary.*
 
-  <section id="topology">
-    <h2>Network Topology & Components</h2>
-    <ul>
-      <li><strong>Core (Multilayer) Switch:</strong> Acts as the central hub performing inter-VLAN routing and connects to all departmental and server switches using trunk links.</li>
-      <li><strong>Department Access Switches:</strong> Separate switches for HR, CS, Marketing, IT, Management, and Finance, each assigned its own VLAN.</li>
-      <li><strong>Server-Side Switch:</strong> Connects servers such as DHCP, Email, and HTTPS with dedicated VLANs.</li>
-    </ul>
-    <div class="screenshot">
-      <img src="Capture.JPG" alt="Network Diagram">
-      <p><em>Figure: Network Diagram Overview</em></p>
-    </div>
-  </section>
+## 📖 Overview
+This project sets up a scalable enterprise network using VLANs for departmental segmentation and a multilayer core switch for inter-VLAN routing. The design includes:
+- **CoreSwitch**: Central router for VLAN traffic.
+- **Department Access Switches**: HR, CS, Marketing, IT, Management, and Finance.
+- **ServerSwitch**: Dedicated to server resources (DHCP, Email, HTTPS).
 
-  <section id="configuration">
-    <h2>Detailed Configuration</h2>
-    
-    <h3>Core Switch (CoreSwitch)</h3>
-    <p>The CoreSwitch is configured with the following features:</p>
-    <ul>
-      <li><strong>Hostname & Banner:</strong> Custom welcome message for authorized access.</li>
-      <li><strong>Inter-VLAN Routing:</strong> Enabled with IP routing and configured SVIs for each VLAN.</li>
-      <li><strong>VLANs:</strong> Includes departmental VLANs (10 to 60) and server VLANs (100, 110, 120).</li>
-      <li><strong>Trunk Ports:</strong> Two trunk ports (GigabitEthernet0/1 and 0/2) allow traffic for all VLANs.</li>
-    </ul>
-    <pre>
-! CoreSwitch Configuration Sample
-hostname CoreSwitch
-banner motd #
-  ********************************************
-  *  Welcome to the Core (Multilayer) Switch  *
-  *       Authorized Personnel Only!         *
-  ********************************************
+## 🌐 Network Topology
+### Core Infrastructure
+- **CoreSwitch (Multilayer Switch)**  
+  - **Role**: Inter-VLAN routing and trunking to all switches.
+  - **Trunk Ports**: `GigabitEthernet0/1` and `GigabitEthernet0/2` (carry all VLANs).
+  - **VLANs**:
+    | VLAN ID | Name          | Subnet          |
+    |---------|---------------|-----------------|
+    | 10      | HR            | 192.168.10.0/24 |
+    | 20      | CS            | 192.168.20.0/24 |
+    | 30      | Marketing     | 192.168.30.0/24 |
+    | 40      | IT            | 192.168.40.0/24 |
+    | 50      | Management    | 192.168.50.0/24 |
+    | 60      | Finance       | 192.168.60.0/24 |
+    | 100     | DHCP_Server   | 192.168.100.0/24|
+    | 110     | Email_Server  | 192.168.110.0/24|
+    | 120     | HTTPS_Server  | 192.168.120.0/24|
+
+### Department Access Switches
+- **HR_Switch, CS_Switch, etc.**  
+  - **Role**: Connect end devices to their respective VLANs.
+  - **Access Ports**: `FastEthernet0/1-12` assigned to department VLAN.
+  - **Trunk Uplink**: `GigabitEthernet0/1` to CoreSwitch.
+
+### Server-Side Switch
+- **ServerSwitch**  
+  - **Role**: Hosts servers in dedicated VLANs (100, 110, 120).
+  - **Trunk Uplink**: `GigabitEthernet0/1` to CoreSwitch (carries server and department VLANs).
+
+## 🛠 Configuration Highlights
+### CoreSwitch Setup
+```plaintext
+! Enable Layer 3 routing
 ip routing
+
+! Create VLANs
 vlan 10
  name HR
 ...
+
+! Configure SVIs for routing
+interface Vlan10
+ ip address 192.168.10.1 255.255.255.0
+ no shutdown
+...
+
+! Trunk ports
 interface GigabitEthernet0/1
  switchport mode trunk
  switchport trunk allowed vlan 10,20,30,40,50,60,100,110,120
-write memory
-    </pre>
+```
 
-    <h3>Department Access Switches</h3>
-    <p>Each departmental switch (e.g., HR_Switch, CS_Switch, etc.) is configured to:</p>
-    <ul>
-      <li>Display a department-specific welcome banner.</li>
-      <li>Create and assign the appropriate VLAN (e.g., VLAN 10 for HR, VLAN 20 for CS).</li>
-      <li>Configure access ports for end-user devices and a trunk uplink port to the CoreSwitch.</li>
-    </ul>
-    <pre>
-! HR_Switch Configuration Sample
-hostname HR_Switch
-banner motd #
-  ************************************
-  *   Welcome to the HR Department   *
-  *       Access Switch              *
-  ************************************
-vlan 10
- name HR
+### Department Switch Example (HR_Switch)
+```plaintext
+! Assign access ports to VLAN 10
 interface range FastEthernet0/1-12
  switchport mode access
  switchport access vlan 10
+
+! Trunk uplink
 interface GigabitEthernet0/1
  switchport mode trunk
  switchport trunk allowed vlan 10,20,30,40,50,60
-write memory
-    </pre>
+```
 
-    <h3>Server-Side Switch (ServerSwitch)</h3>
-    <p>The ServerSwitch hosts server resources with the following configuration:</p>
-    <ul>
-      <li><strong>Hostname & Banner:</strong> Custom welcome message for the server room.</li>
-      <li><strong>VLANs for Servers:</strong> Includes VLANs for DHCP (100), Email (110), and HTTPS (120).</li>
-      <li><strong>Trunk Port:</strong> Configured to carry both departmental and server VLANs.</li>
-    </ul>
-    <pre>
-! ServerSwitch Configuration Sample
-hostname ServerSwitch
-banner motd #
-  ********************************************
-  *  Welcome to the Server Room Switch       *
-  *       Authorized Personnel Only!         *
-  ********************************************
-vlan 100
- name DHCP_Server
-vlan 110
- name Email_Server
-vlan 120
- name HTTPS_Server
-interface GigabitEthernet0/1
- switchport mode trunk
- switchport trunk allowed vlan 100,110,120,10,20,30,40,50,60
-write memory
-    </pre>
-  </section>
+### Security Features
+- **Banner Messages**: Custom MOTD for device identification.
+- **Password Encryption**: 
+  ```plaintext
+  service password-encryption
+  line console 0
+   password cisco
+   login
+  ```
+- **SSH Access**:
+  ```plaintext
+  line vty 0 4
+   transport input ssh
+  ```
 
-  <section id="documentation">
-    <h2>Project Documentation</h2>
-    <p>The complete network documentation details the rationale behind each configuration step:</p>
-    <ul>
-      <li><strong>Overview Documents:</strong> Provide project scope, objectives, and network segmentation.</li>
-      <li><strong>Configuration Files:</strong> Contain all commands for VLAN creation, interface configuration, and security settings.</li>
-      <li><strong>Verification Commands:</strong> Used to confirm VLAN assignments, trunk settings, and routing tables.</li>
-    </ul>
-    <p>Refer to the configuration documents for more details on the setup and to guide future modifications or troubleshooting.</p>
-  </section>
+## 🔄 How It Works
+1. **Inter-VLAN Routing**: CoreSwitch routes traffic between VLANs using SVIs.
+2. **Traffic Isolation**: Departments are segmented into VLANs for security and performance.
+3. **Trunk Links**: Carry multiple VLANs between switches over a single physical connection.
+4. **Server Connectivity**: Servers communicate with departments via trunked VLANs.
 
-  <section id="license-contact">
-    <h2>License & Contact</h2>
-    <h3>License</h3>
-    <p>This project is licensed under the MIT License. You are free to use, modify, and distribute this project as long as you include the original license and copyright notice.</p>
-    <pre>
-MIT License
+## 📥 Deployment
+1. Copy configurations from `Configs.txt` or `Configs_With_IPs.txt` to respective switches.
+2. Verify trunk/allowed VLANs match between switches.
+3. Enable `ip routing` on CoreSwitch.
 
-Copyright (c) 2025
+## ✅ Verification Commands
+```plaintext
+show vlan brief          # Check VLAN assignments
+show ip interface brief  # Verify SVI status
+show interfaces trunk    # Confirm trunk configurations
+show running-config      # Review current settings
+```
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-[Full license text available in the LICENSE file]
-    </pre>
-
-    <h3>Contact</h3>
-    <p>For any inquiries or further information about this project, please contact:</p>
-    <ul>
-      <li><strong>Email:</strong> support@networkproject.com</li>
-      <li><strong>Phone:</strong> +1 (555) 123-4567</li>
-      <li><strong>Address:</strong> 123 Network Lane, Tech City, USA</li>
-    </ul>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 Enterprise Network Configuration Project</p>
-  </footer>
-</body>
-</html>
+## 📝 Conclusion
+This setup provides a secure, segmented network with centralized routing. Departments operate in isolated VLANs, while servers are accessible across the network via trunk links. For detailed configurations, refer to the provided `.txt` files.
