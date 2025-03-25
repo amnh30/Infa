@@ -149,7 +149,7 @@ For questions, feedback, or collaboration:
 ---
 
 ## © Copyright  
-*2023 [Ahmed Nageeb]. All rights reserved.*  
+*2025 [Ahmed Nageeb]. All rights reserved.*  
 
 *This documentation and associated configurations are proprietary and intended solely for authorized use. Unauthorized distribution or modification is prohibited.*  
 ``` 
