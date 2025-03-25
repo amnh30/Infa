@@ -117,7 +117,7 @@ This project is licensed under the MIT License.
 ```plaintext
 MIT License
 
-Copyright (c) 2023 [Your Name/Organization]
+Copyright (c) 2023 [Amed Nageeb]
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -142,23 +142,15 @@ SOFTWARE.
 
 ## 📬 Contact  
 For questions, feedback, or collaboration:  
-- **Email**: [your.email@domain.com](mailto:your.email@domain.com)  
-- **GitHub**: [@YourGitHubProfile](https://github.com/YourGitHubProfile)  
-- **Issues**: Open a ticket in the [GitHub Issues](https://github.com/YourRepo/issues) section.  
+- **Email**: [amn951753@gmail.com](mailto:amn951753@gmail.com)  
+- **GitHub**: [@YourGitHubProfile](https://github.com/amnh30)  
+- **Issues**: Open a ticket in the [GitHub Issues](https://github.com/amnh30/Infa/issues) section.  
 
 ---
 
 ## © Copyright  
-*2023 [Your Name/Organization]. All rights reserved.*  
+*2023 [Ahmed Nageeb]. All rights reserved.*  
 
 *This documentation and associated configurations are proprietary and intended solely for authorized use. Unauthorized distribution or modification is prohibited.*  
 ``` 
 
-Key additions:  
-1. **License**: Added MIT License with full terms.  
-2. **Contact**: Professional contact options with markdown links.  
-3. **Copyright**: Clear ownership statement and usage restrictions.  
-4. **Badge Support** (Optional): Add a license badge at the top:  
-   ```markdown  
-   ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)  
-   ```
