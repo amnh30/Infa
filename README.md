@@ -152,5 +152,5 @@ For questions, feedback, or collaboration:
 *2025 [Ahmed Nageeb]. All rights reserved.*  
 
 *This documentation and associated configurations are proprietary and intended solely for authorized use. Unauthorized distribution or modification is prohibited.*  
-``` 
+
 
