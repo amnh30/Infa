@@ -143,7 +143,7 @@ SOFTWARE.
 ## 📬 Contact  
 For questions, feedback, or collaboration:  
 - **Email**: [amn951753@gmail.com](mailto:amn951753@gmail.com)  
-- **GitHub**: [@YourGitHubProfile](https://github.com/amnh30)  
+- **GitHub**: [@MyGitHubProfile](https://github.com/amnh30)  
 - **Issues**: Open a ticket in the [GitHub Issues](https://github.com/amnh30/Infa/issues) section.  
 
 ---
