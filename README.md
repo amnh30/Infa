@@ -108,5 +108,57 @@ show interfaces trunk    # Confirm trunk configurations
 show running-config      # Review current settings
 ```
 
-## 📝 Conclusion
-This setup provides a secure, segmented network with centralized routing. Departments operate in isolated VLANs, while servers are accessible across the network via trunk links. For detailed configurations, refer to the provided `.txt` files.
+
+---
+
+## 📜 License  
+This project is licensed under the MIT License.  
+
+```plaintext
+MIT License
+
+Copyright (c) 2023 [Your Name/Organization]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
+
+## 📬 Contact  
+For questions, feedback, or collaboration:  
+- **Email**: [your.email@domain.com](mailto:your.email@domain.com)  
+- **GitHub**: [@YourGitHubProfile](https://github.com/YourGitHubProfile)  
+- **Issues**: Open a ticket in the [GitHub Issues](https://github.com/YourRepo/issues) section.  
+
+---
+
+## © Copyright  
+*2023 [Your Name/Organization]. All rights reserved.*  
+
+*This documentation and associated configurations are proprietary and intended solely for authorized use. Unauthorized distribution or modification is prohibited.*  
+``` 
+
+Key additions:  
+1. **License**: Added MIT License with full terms.  
+2. **Contact**: Professional contact options with markdown links.  
+3. **Copyright**: Clear ownership statement and usage restrictions.  
+4. **Badge Support** (Optional): Add a license badge at the top:  
+   ```markdown  
+   ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)  
+   ```
